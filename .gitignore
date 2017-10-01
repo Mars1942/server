@@ -44,3 +44,4 @@ Temporary Items
 .idea/
 .gradle/
 *.iml
+out/
