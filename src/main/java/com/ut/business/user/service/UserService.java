@@ -1,26 +1,31 @@
 package com.ut.business.user.service;
 
 import com.ut.business.user.domain.User;
-import com.ut.business.user.repository.UserRepository;
+import com.ut.business.user.repository.UserPagingAndSortingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Service
 public class UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserPagingAndSortingRepository userPagingAndSortingRepository;
 
     @Transactional
-    public void save(User user) {
-        userRepository.save(user);
+    public String save(User user) {
+        return userPagingAndSortingRepository.save(user).getId();
     }
 
-    public List<User> findByName(String name){
-        return userRepository.findByName(name);
+    public Page<User> findAll(int pageNumber, int pageSize){
+        Sort sort = new Sort("name");
+        PageRequest request = new PageRequest(pageNumber,pageSize,sort);
+        return userPagingAndSortingRepository.findAll(request);
     }
+
 
 }

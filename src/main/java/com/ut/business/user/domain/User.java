@@ -2,16 +2,14 @@ package com.ut.business.user.domain;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * 雇员:  先开发实体类===>自动生成数据表
  */
 @Entity
-public class User {
+public class User{
 
     private String id;
 
@@ -28,7 +26,7 @@ public class User {
     }
 
     @Id
-    @GeneratedValue(generator = "uuid")
+    @GeneratedValue(generator = "uuid",strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "uuid", strategy = "uuid")
     @Column(length = 32, nullable = false)
     public String getId() {

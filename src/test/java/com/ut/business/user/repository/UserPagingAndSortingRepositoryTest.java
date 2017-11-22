@@ -11,18 +11,10 @@ import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class UserRepositoryTest{
+public class UserPagingAndSortingRepositoryTest {
 
     @Autowired
-    private UserRepository userRepository = null;
+    private UserPagingAndSortingRepository userRepository = null;
 
-
-    @Test
-    public void testFindByName() {
-        List<User> userList = userRepository.findByName("张三");
-        for (User user : userList) {
-            System.out.println("id:"+user.getId() + "name:" + user.getName());
-        }
-    }
 
 }
