@@ -25,6 +25,12 @@ public class UserController {
         return userService.findAll(pageNumber, Constant.PAGE_SIZE);
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String login(String name, String passWord) {
+        userService.findByLoginNameAndPassWord(name,passWord);
+        return "dashabu";
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String add(@RequestParam("user") User user){
 

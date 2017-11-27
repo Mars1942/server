@@ -1,5 +1,6 @@
 package com.ut.business.user.domain;
 
+import com.ut.business.role.domain.Role;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -15,7 +16,13 @@ public class User{
 
     private String name;
 
+    private String loginName;
+
+    private String passWord;
+
     private Integer age;
+
+    private Integer sex;
 
     public User() {
     }
@@ -52,5 +59,25 @@ public class User{
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public Integer getSex() { return sex; }
+
+    public void setSex(Integer sex) { this.sex = sex; }
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
+
+    public String getPassWord() {
+        return passWord;
+    }
+
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
     }
 }

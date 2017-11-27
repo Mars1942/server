@@ -27,5 +27,7 @@ public class UserService {
         return userPagingAndSortingRepository.findAll(request);
     }
 
-
+    public User findByLoginNameAndPassWord(String name, String passWord) {
+        return userPagingAndSortingRepository.findByLoginNameAndPassWord(name, passWord);
+    }
 }

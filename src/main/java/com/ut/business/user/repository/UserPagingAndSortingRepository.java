@@ -6,4 +6,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface UserPagingAndSortingRepository extends PagingAndSortingRepository<User, String> {
 
+    User findByLoginNameAndPassWord(String name, String passWord);
 }
