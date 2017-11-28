@@ -9,9 +9,9 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter{
 
     public void addCorsMappings(CorsRegistry registry) {
 //        registry.addMapping("/**");
-        registry.addMapping("/user/**")
-                .allowedOrigins("http://192.168.31.126")
-                .allowedMethods("GET", "POST")
-                .allowCredentials(false).maxAge(3600);
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowedMethods("GET", "POST", "DELETE", "PUT")
+                .maxAge(3600);
     }
 }

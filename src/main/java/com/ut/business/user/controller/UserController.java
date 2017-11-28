@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping(value = "user")
@@ -26,9 +26,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(String name, String passWord) {
-        userService.findByLoginNameAndPassWord(name,passWord);
-        return "dashabu";
+    public User login(@RequestParam("name") String name, @RequestParam("passWord") String passWord, HttpServletRequest request) {
+        String a = request.getParameter("name");
+        System.out.print(a);
+        return userService.findByLoginNameAndPassWord(name,passWord);
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
