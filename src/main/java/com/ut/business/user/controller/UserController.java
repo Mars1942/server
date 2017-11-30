@@ -23,9 +23,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ResponseBody
     public User login(@RequestBody User user) {
 
         return userService.findByLoginNameAndPassWord(user.getName(),user.getPassWord());
+
+//        return "success";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)

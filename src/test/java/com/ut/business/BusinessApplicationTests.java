@@ -11,7 +11,6 @@ public class BusinessApplicationTests {
 
 	@Test
 	public void contextLoads() {
-int 1;
 	}
 
 }
