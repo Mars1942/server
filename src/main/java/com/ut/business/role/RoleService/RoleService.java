@@ -15,9 +15,9 @@ public class RoleService {
     private RoleRepository RoleRepository;
 
     @Transactional
-    public String save(Role role) { return RoleRepository.save(role).getId();}
+    public String save(Role role) throws Exception{ return RoleRepository.save(role).getId();}
 
-    public Page<Role> findAll(int pageNumber, int pageSize) {
+    public Page<Role> findAll(int pageNumber, int pageSize) throws Exception{
         Sort sort = new Sort("name");
         PageRequest request = new PageRequest(pageNumber,pageSize,sort);
         return RoleRepository.findAll(request);

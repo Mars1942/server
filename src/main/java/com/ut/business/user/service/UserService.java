@@ -17,17 +17,21 @@ public class UserService {
     private UserPagingAndSortingRepository userPagingAndSortingRepository;
 
     @Transactional
-    public String save(User user) {
+    public String save(User user) throws Exception{
         return userPagingAndSortingRepository.save(user).getId();
     }
 
-    public Page<User> findAll(int pageNumber, int pageSize){
+    public void del(String id) throws Exception{
+        userPagingAndSortingRepository.delete(id);
+    }
+
+    public Page<User> findAll(int pageNumber, int pageSize) throws Exception{
         Sort sort = new Sort("name");
         PageRequest request = new PageRequest(pageNumber,pageSize,sort);
         return userPagingAndSortingRepository.findAll(request);
     }
 
-    public User findByLoginNameAndPassWord(String name, String passWord) {
+    public User findByLoginNameAndPassWord(String name, String passWord) throws Exception{
         return userPagingAndSortingRepository.findByLoginNameAndPassWord(name, passWord);
     }
 }

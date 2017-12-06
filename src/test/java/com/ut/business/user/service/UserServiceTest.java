@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class UserServiceTest{
@@ -17,5 +19,11 @@ public class UserServiceTest{
     @Test
     public void testSave(){
         userService.save(new User("张三",10));
+    }
+
+    @Test
+    public void testPuery(){
+        User user = userService.findByLoginNameAndPassWord("1","1");
+        System.out.println("name" + user.getLoginName());
     }
 }
