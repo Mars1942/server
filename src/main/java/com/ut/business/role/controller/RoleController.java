@@ -22,32 +22,36 @@ public class RoleController {
         return br;
     }
 
-    @RequestMapping(value = "/:id", method = RequestMethod.GET)
-    public BackResult findById(@RequestParam("id") String id) throws Exception{
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public BackResult findById(@PathVariable String id) throws Exception{
         Role role = roleService.findById(id);
         BackResult<Role> br = new BackResult<>(role);
         return br;
     }
 
     @ResponseBody
-    @RequestMapping(value = "/del", method = RequestMethod.POST)
-    public BackResult del(@RequestParam("id") String id) throws Exception{
+    @RequestMapping(value = "/del/{id}", method = RequestMethod.POST)
+    public BackResult del(@PathVariable String id) throws Exception{
         roleService.del(id);
-        BackResult<String> br = new BackResult<>("删除成功");
+        BackResult<String> br = new BackResult<>("");
+        br.setMsg("删除成功");
         return br;
     }
 
     @ResponseBody
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public BackResult add(@RequestParam("role") Role role) throws Exception{
+    @RequestMapping(method = RequestMethod.POST)
+    public BackResult add(@RequestBody Role role) throws Exception{
         BackResult<String> br = new BackResult<>(roleService.save(role));
+        br.setMsg("添加成功");
         return br;
     }
 
     @ResponseBody
-    @RequestMapping(value = "/updata", method = RequestMethod.POST)
-    public BackResult updata(@RequestParam("role") Role role) throws Exception{
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public BackResult updata(@PathVariable String id, @RequestBody Role role) throws Exception{
+        role.setId(id);
         BackResult<String> br = new BackResult<>(roleService.save(role));
+        br.setMsg("修改成功");
         return br;
     }
 }

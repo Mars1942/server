@@ -37,7 +37,7 @@ public class Course {
 
     private List<UserToCourse> uTocList;
 
-    private List<User> UserList;
+//    private List<User> UserList;
 
     @Id
     @GeneratedValue(generator = "uuid",strategy = GenerationType.IDENTITY)
@@ -130,19 +130,19 @@ public class Course {
         this.uTocList = uTocList;
     }
 
-    @Transient
-    public List<User> getUserList() {
-        List<User> list = new ArrayList<User>();
-        for (UserToCourse userToCourse:uTocList) {
-            User user = userToCourse.getUser();
-            user.setuToRList(null);
-            user.setuTocList(null);
-            list.add(user);
-        }
-        return list;
-    }
-
-    public void setUserList(List<User> userList) {
-        UserList = userList;
-    }
+//    @Transient
+//    public List<User> getUserList() {
+//        List<User> list = new ArrayList<User>();
+//        for (UserToCourse userToCourse:uTocList) {
+//            User user = userToCourse.getUser();
+//            user.setuToRList(null);
+//            user.setuTocList(null);
+//            list.add(user);
+//        }
+//        return list;
+//    }
+//
+//    public void setUserList(List<User> userList) {
+//        UserList = userList;
+//    }
 }

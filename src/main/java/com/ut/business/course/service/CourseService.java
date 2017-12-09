@@ -19,6 +19,11 @@ public class CourseService {
     @Transactional
     public String save(Course course) throws Exception{ return courseRepository.save(course).getId();}
 
+    @Transactional
+    public void del(String id) throws Exception {
+        courseRepository.delete(id);
+    }
+
     public Course findById(String id) {
         return courseRepository.findOne(id);
     }

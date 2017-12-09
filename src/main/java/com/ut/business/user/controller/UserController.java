@@ -24,26 +24,19 @@ public class UserController {
         return br;
     }
 
-
-    @RequestMapping(value = "/list1", method = RequestMethod.GET)
-    public BackResult first1Page(@RequestParam("pageNumber") int pageNumber) throws Exception{
-        Page<User> page = userService.findAll(pageNumber, Constant.PAGE_SIZE);
-        BackResult<Page<User>> br = new BackResult<>(page);
-        return br;
-    }
-
-    @RequestMapping(value = "/:id", method = RequestMethod.GET)
-    public BackResult findById(@RequestParam("id") String id) throws Exception{
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public BackResult findById(@PathVariable String id) throws Exception{
         User user = userService.findById(id);
         BackResult<User> br = new BackResult<>(user);
         return br;
     }
 
     @ResponseBody
-    @RequestMapping(value = "/del", method = RequestMethod.POST)
-    public BackResult del(@RequestParam("id") String id) throws Exception{
+    @RequestMapping(value = "/del/{id}", method = RequestMethod.POST)
+    public BackResult del(@PathVariable String id) throws Exception{
         userService.del(id);
-        BackResult<String> br = new BackResult<>("删除成功");
+        BackResult<String> br = new BackResult<>("");
+        br.setMsg("删除成功");
         return br;
     }
 
@@ -53,23 +46,27 @@ public class UserController {
         User us = userService.findByLoginNameAndPassWord(user.getName(),user.getPassWord());
         BackResult<User> br = new BackResult<>(us);
         if (us == null) {
+            br.setCode(3);
             br.setMsg("没有该用户或密码不正确");
             return br;
         }
+        br.setMsg("登录成功");
         return br;
     }
 
     @ResponseBody
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public BackResult add(@RequestParam("user") User user) throws Exception{
+    @RequestMapping(method = RequestMethod.POST)
+    public BackResult add(@RequestBody User user) throws Exception{
         BackResult<String> br = new BackResult<>(userService.save(user));
+        br.setMsg("添加成功");
         return br;
     }
 
     @ResponseBody
-    @RequestMapping(value = "/updata", method = RequestMethod.POST)
-    public BackResult upate(@RequestParam("user") User user) throws Exception{
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public BackResult upate(@PathVariable String id,@RequestBody User user) throws Exception{
         BackResult<String> br = new BackResult<>(userService.save(user));
+        br.setMsg("修改成功");
         return br;
     }
 }
