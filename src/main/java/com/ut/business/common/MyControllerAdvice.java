@@ -21,8 +21,8 @@ public class MyControllerAdvice {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public BackResult errorHandler(Exception ex) {
-        BackResult<String> br = new BackResult<>("服务器发生异常");
-        br.setMsg(ex.getMessage());
+        BackResult<String> br = new BackResult<>(ex.getMessage());
+        br.setMsg("服务器发生异常");
         br.setCode(2);
         return br;
     }

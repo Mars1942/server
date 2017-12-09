@@ -17,12 +17,17 @@ public class UserService {
     private UserPagingAndSortingRepository userPagingAndSortingRepository;
 
     @Transactional
-    public String save(User user) throws Exception{
+    public String save(User user) throws Exception {
         return userPagingAndSortingRepository.save(user).getId();
     }
 
-    public void del(String id) throws Exception{
+    @Transactional
+    public void del(String id) throws Exception {
         userPagingAndSortingRepository.delete(id);
+    }
+
+    public User findById(String id)  throws Exception {
+        return userPagingAndSortingRepository.findOne(id);
     }
 
     public Page<User> findAll(int pageNumber, int pageSize) throws Exception{

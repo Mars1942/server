@@ -1,10 +1,11 @@
 package com.ut.business.user.domain;
 
-import com.ut.business.role.domain.Role;
+import com.ut.business.course.domain.UserToCourse;
+import com.ut.business.role.domain.UserToRole;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.List;
 
 /**
  * 雇员:  先开发实体类===>自动生成数据表
@@ -23,6 +24,10 @@ public class User{
     private Integer age;
 
     private Integer sex;
+
+    private List<UserToRole> uToRList;
+
+    private List<UserToCourse> uTocList;
 
     public User() {
     }
@@ -79,5 +84,23 @@ public class User{
 
     public void setPassWord(String passWord) {
         this.passWord = passWord;
+    }
+
+    @OneToMany(mappedBy="user"/*,cascade = CascadeType.ALL, fetch = FetchType.LAZY*/)
+    public List<UserToRole> getuToRList() {
+        return uToRList;
+    }
+
+    public void setuToRList(List<UserToRole> uToRList) {
+        this.uToRList = uToRList;
+    }
+
+    @OneToMany(mappedBy="user")
+    public List<UserToCourse> getuTocList() {
+        return uTocList;
+    }
+
+    public void setuTocList(List<UserToCourse> uTocList) {
+        this.uTocList = uTocList;
     }
 }

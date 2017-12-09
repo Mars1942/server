@@ -19,6 +19,10 @@ public class CourseService {
     @Transactional
     public String save(Course course) throws Exception{ return courseRepository.save(course).getId();}
 
+    public Course findById(String id) {
+        return courseRepository.findOne(id);
+    }
+
     public Page<Course> findAll(int pageNumber, int pageSize) throws Exception{
         Sort sort = new Sort("courseName");
         PageRequest request = new PageRequest(pageNumber,pageSize,sort);

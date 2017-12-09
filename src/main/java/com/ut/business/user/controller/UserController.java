@@ -32,16 +32,23 @@ public class UserController {
         return br;
     }
 
-    @RequestMapping(value = "/del", method = RequestMethod.POST)
+    @RequestMapping(value = "/:id", method = RequestMethod.GET)
+    public BackResult findById(@RequestParam("id") String id) throws Exception{
+        User user = userService.findById(id);
+        BackResult<User> br = new BackResult<>(user);
+        return br;
+    }
+
     @ResponseBody
+    @RequestMapping(value = "/del", method = RequestMethod.POST)
     public BackResult del(@RequestParam("id") String id) throws Exception{
         userService.del(id);
         BackResult<String> br = new BackResult<>("删除成功");
         return br;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public BackResult login(@RequestBody User user) throws Exception{
         User us = userService.findByLoginNameAndPassWord(user.getName(),user.getPassWord());
         BackResult<User> br = new BackResult<>(us);
@@ -52,8 +59,16 @@ public class UserController {
         return br;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @ResponseBody
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public BackResult add(@RequestParam("user") User user) throws Exception{
+        BackResult<String> br = new BackResult<>(userService.save(user));
+        return br;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/updata", method = RequestMethod.POST)
+    public BackResult upate(@RequestParam("user") User user) throws Exception{
         BackResult<String> br = new BackResult<>(userService.save(user));
         return br;
     }

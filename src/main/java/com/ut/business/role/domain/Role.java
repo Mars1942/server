@@ -1,8 +1,10 @@
 package com.ut.business.role.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * 角色
@@ -15,6 +17,8 @@ public class Role {
     private String name;
 
     private String sort;
+
+    private List<UserToRole> uToRList;
 
     @Id
     @GeneratedValue(generator = "uuid",strategy = GenerationType.IDENTITY)
@@ -42,6 +46,16 @@ public class Role {
 
     public void setSort(String sort) {
         this.sort = sort;
+    }
+
+    @OneToMany(mappedBy="role",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    public List<UserToRole> getuToRList() {
+        return uToRList;
+    }
+
+    public void setuToRList(List<UserToRole> uToRList) {
+        this.uToRList = uToRList;
     }
 
 }

@@ -1,23 +1,20 @@
-package com.ut.business.role.domain;
+package com.ut.business.course.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ut.business.user.domain.User;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.CascadeType;
 import javax.persistence.*;
 
-/**
- * 用户角色关联表
- */
 @Entity
-public class UserToRole {
+public class UserToCourse {
 
     private String id;
 
     private User user;
 
-    private Role role;
+    private Course course;
 
     @Id
     @GeneratedValue(generator = "uuid",strategy = GenerationType.IDENTITY)
@@ -32,8 +29,8 @@ public class UserToRole {
     }
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @ManyToOne(cascade= CascadeType.REFRESH,optional=false)
+    @JoinColumn(name = "user_id")
     public User getUser() {
         return user;
     }
@@ -43,12 +40,12 @@ public class UserToRole {
     }
 
     @ManyToOne(cascade= CascadeType.REFRESH,optional=false)
-    @JoinColumn(name = "role_id")
-    public Role getRole() {
-        return role;
+    @JoinColumn(name = "course_id")
+    public Course getCourse() {
+        return course;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }
