@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/del/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public BackResult del(@PathVariable String id) throws Exception{
         userService.del(id);
         BackResult<String> br = new BackResult<>("");
@@ -61,7 +61,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public BackResult upate(@PathVariable String id,@RequestBody User user) throws Exception{
         BackResult<String> br = new BackResult<>(userService.save(user));
         br.setMsg("修改成功");
