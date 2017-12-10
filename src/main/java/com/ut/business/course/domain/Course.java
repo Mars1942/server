@@ -91,7 +91,7 @@ public class Course {
         this.hasCount = hasCount;
     }
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "userId")
     public User getTeacher() {
@@ -120,7 +120,7 @@ public class Course {
         this.teacherName = teacherName;
     }
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(mappedBy="course")
     public List<UserToCourse> getuTocList() {
         return uTocList;

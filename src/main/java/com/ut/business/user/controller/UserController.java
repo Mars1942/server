@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-
 @RestController
 @RequestMapping(value = "user")
 public class UserController {
@@ -55,7 +53,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/add",  method = RequestMethod.POST)
     public BackResult add(@RequestBody User user) throws Exception{
         BackResult<String> br = new BackResult<>(userService.save(user));
         br.setMsg("添加成功");
