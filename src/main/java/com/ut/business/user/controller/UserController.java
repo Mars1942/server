@@ -53,7 +53,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/add",  method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public BackResult add(@RequestBody User user) throws Exception{
         BackResult<String> br = new BackResult<>(userService.save(user));
         br.setMsg("添加成功");
