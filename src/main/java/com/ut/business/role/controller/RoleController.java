@@ -48,7 +48,7 @@ public class RoleController {
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public BackResult updata(@PathVariable String id, @RequestBody Role role) throws Exception{
+    public BackResult update(@PathVariable String id, @RequestBody Role role) throws Exception{
         role.setId(id);
         BackResult<String> br = new BackResult<>(roleService.save(role));
         br.setMsg("修改成功");

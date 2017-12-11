@@ -23,7 +23,7 @@ public class User{
 
     private Integer age;
 
-    private Integer sex;
+    private Integer sex;    // 0：男；1：女
 
     private List<UserToRole> uToRList;
 

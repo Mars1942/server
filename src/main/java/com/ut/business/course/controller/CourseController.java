@@ -48,7 +48,7 @@ public class CourseController {
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public BackResult updata(@PathVariable String id, @RequestBody Course course) throws Exception{
+    public BackResult update(@PathVariable String id, @RequestBody Course course) throws Exception{
         course.setId(id);
         BackResult<String> br = new BackResult<>(courseService.save(course));
         br.setMsg("修改成功");

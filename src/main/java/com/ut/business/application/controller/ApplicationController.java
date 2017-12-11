@@ -1,5 +1,7 @@
-package com.ut.business.user.controller;
+package com.ut.business.application.controller;
 
+import com.ut.business.application.domain.Application;
+import com.ut.business.application.service.ApplicationService;
 import com.ut.business.common.BackResult;
 import com.ut.business.pagingandsorting.constant.Constant;
 import com.ut.business.user.domain.User;
@@ -9,62 +11,49 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "user")
-public class UserController {
+@RequestMapping(value = "application")
+public class ApplicationController {
 
     @Autowired
-    UserService userService;
+    ApplicationService applicationService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public BackResult firstPage(@RequestParam("pageNumber") int pageNumber) throws Exception {
-        Page<User> page = userService.findAll(pageNumber, Constant.PAGE_SIZE);
-        BackResult<Page<User>> br = new BackResult<>(page);
+        Page<Application> page = applicationService.findAll(pageNumber, Constant.PAGE_SIZE);
+        BackResult<Page<Application>> br = new BackResult<>(page);
         return br;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public BackResult findById(@PathVariable String id) throws Exception{
-        User user = userService.findById(id);
-        BackResult<User> br = new BackResult<>(user);
+        Application user = applicationService.findById(id);
+        BackResult<Application> br = new BackResult<>(user);
         return br;
     }
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public BackResult del(@PathVariable String id) throws Exception{
-        userService.del(id);
+        applicationService.del(id);
         BackResult<String> br = new BackResult<>("");
         br.setMsg("删除成功");
         return br;
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public BackResult login(@RequestBody User user) throws Exception{
-        User us = userService.findByLoginNameAndPassWord(user.getLoginName(),user.getPassWord());
-        BackResult<User> br = new BackResult<>(us);
-        if (us == null) {
-            br.setCode(3);
-            br.setMsg("没有该用户或密码不正确");
-            return br;
-        }
-        br.setMsg("登录成功");
-        return br;
-    }
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
-    public BackResult add(@RequestBody User user) throws Exception{
-        BackResult<String> br = new BackResult<>(userService.save(user));
+    public BackResult add(@RequestBody Application application) throws Exception{
+        BackResult<String> br = new BackResult<>(applicationService.save(application));
         br.setMsg("添加成功");
         return br;
     }
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public BackResult update(@PathVariable String id,@RequestBody User user) throws Exception{
-        user.setId(id);
-        BackResult<String> br = new BackResult<>(userService.save(user));
+    public BackResult update(@PathVariable String id,@RequestBody Application application) throws Exception{
+        application.setId(id);
+        BackResult<String> br = new BackResult<>(applicationService.save(application));
         br.setMsg("修改成功");
         return br;
     }
