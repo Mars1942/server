@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/del/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public BackResult del(@PathVariable String id) throws Exception{
         userService.del(id);
         BackResult<String> br = new BackResult<>("");
@@ -43,7 +43,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public BackResult login(@RequestBody User user) throws Exception{
-        User us = userService.findByLoginNameAndPassWord(user.getName(),user.getPassWord());
+        User us = userService.findByLoginNameAndPassWord(user.getLoginName(),user.getPassWord());
         BackResult<User> br = new BackResult<>(us);
         if (us == null) {
             br.setCode(3);
@@ -63,7 +63,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public BackResult upate(@PathVariable String id,@RequestBody User user) throws Exception{
         BackResult<String> br = new BackResult<>(userService.save(user));
         br.setMsg("修改成功");

@@ -3,6 +3,7 @@ package com.ut.business.course.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ut.business.user.domain.User;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -91,9 +92,9 @@ public class Course {
         this.hasCount = hasCount;
     }
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     public User getTeacher() {
         return teacher;
     }
@@ -120,7 +121,7 @@ public class Course {
         this.teacherName = teacherName;
     }
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(mappedBy="course")
     public List<UserToCourse> getuTocList() {
         return uTocList;

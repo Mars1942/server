@@ -30,7 +30,7 @@ public class RoleController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/del/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public BackResult del(@PathVariable String id) throws Exception{
         roleService.del(id);
         BackResult<String> br = new BackResult<>("");
@@ -47,7 +47,7 @@ public class RoleController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public BackResult updata(@PathVariable String id, @RequestBody Role role) throws Exception{
         role.setId(id);
         BackResult<String> br = new BackResult<>(roleService.save(role));

@@ -1,6 +1,7 @@
 package com.ut.business.role.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ut.business.application.domain.RoleToApplication;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -19,6 +20,8 @@ public class Role {
     private String sort;
 
     private List<UserToRole> uToRList;
+
+    private List<RoleToApplication> rToAList;
 
     @Id
     @GeneratedValue(generator = "uuid",strategy = GenerationType.IDENTITY)
@@ -58,4 +61,12 @@ public class Role {
         this.uToRList = uToRList;
     }
 
+    @OneToMany(mappedBy="role",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    public List<RoleToApplication> getrToAList() {
+        return rToAList;
+    }
+
+    public void setrToAList(List<RoleToApplication> rToAList) {
+        this.rToAList = rToAList;
+    }
 }
