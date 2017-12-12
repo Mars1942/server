@@ -22,11 +22,11 @@ public class Course {
 
     private String name;
 
-    private String memo;
+    private String memo;// 备注
 
     private int time;//时长
 
-    private Integer count=0;
+    private Integer count=0;// 总人数
 
     private Integer hasCount=0;//已选课人数
 
