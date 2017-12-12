@@ -40,7 +40,7 @@ public class CourseService {
     }
 
     public Page<Course> findAll(int pageNumber, int pageSize) throws Exception{
-        Sort sort = new Sort("courseName");
+        Sort sort = new Sort("name");
         PageRequest request = new PageRequest(pageNumber,pageSize,sort);
         return courseRepository.findAll(request);
     }

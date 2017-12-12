@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.sun.istack.internal.Nullable;
 import com.ut.business.user.domain.User;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -93,8 +94,7 @@ public class Course {
     }
 
     @JsonIgnore
-    @OneToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @OneToOne(cascade = CascadeType.REFRESH)
     public User getTeacher() {
         return teacher;
     }

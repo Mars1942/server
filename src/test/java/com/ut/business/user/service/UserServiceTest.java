@@ -1,5 +1,7 @@
 package com.ut.business.user.service;
 
+import com.ut.business.course.domain.Course;
+import com.ut.business.course.service.CourseService;
 import com.ut.business.role.RoleService.RoleService;
 import com.ut.business.role.domain.UserToRole;
 import com.ut.business.user.domain.User;
@@ -22,6 +24,9 @@ public class UserServiceTest{
     @Autowired
     private RoleService roleService = null;
 
+    @Autowired
+    private CourseService courseService = null;
+
     @Test
     public void testSave(){
 //        userService.save(new User("张三",10));
@@ -40,5 +45,12 @@ public class UserServiceTest{
         UserToRole utr = new UserToRole();
         utr.setUser(user);
         roleService.save(utr);
+    }
+
+    @Test
+    public void testToCourse() throws Exception {
+        Course course = new Course();
+        course.setCount(3);
+        courseService.save(course);
     }
 }

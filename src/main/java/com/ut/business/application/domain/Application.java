@@ -15,7 +15,7 @@ public class Application {
 
     private String id;
 
-    private Application parent;
+//    private Application parent;
 
     private String code;
 
@@ -25,7 +25,7 @@ public class Application {
 
     private int sort;
 
-    private List<Application> child;
+//    private List<Application> child;
 
     private List<RoleToApplication> rToAList;
 
@@ -75,15 +75,15 @@ public class Application {
         this.url = url;
     }
 
-    @OneToMany(mappedBy="application",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
-    public List<Application> getChild() {
-        return child;
-    }
-
-    public void setChild(List<Application> child) {
-        this.child = child;
-    }
+//    @OneToMany(mappedBy="application",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinColumn(name = "id")
+//    public List<Application> getChild() {
+//        return child;
+//    }
+//
+//    public void setChild(List<Application> child) {
+//        this.child = child;
+//    }
 
     @OneToMany(mappedBy="application",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore

@@ -42,7 +42,7 @@ public class UserToRole {
         this.user = user;
     }
 
-    @ManyToOne(cascade= CascadeType.REFRESH,optional=false)
+    @ManyToOne(cascade= CascadeType.REFRESH)
     @JoinColumn(name = "role_id")
     public Role getRole() {
         return role;
