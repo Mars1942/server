@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class RoleService {
@@ -41,6 +42,10 @@ public class RoleService {
 
     @Transactional
     public void del(String id) throws Exception {
-        userToRoleRepository.delete(id);
+        RoleRepository.delete(id);
+        List<UserToRole> list = userToRoleRepository.findByRoleId(id);
+        for (UserToRole userToRole : list) {
+            userToRoleRepository.delete(userToRole);
+        }
     }
 }

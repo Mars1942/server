@@ -20,11 +20,11 @@ public class Course {
 
     private String id;
 
-    private String courseName;
+    private String name;
 
     private String memo;
 
-    private String time;//时长
+    private int time;//时长
 
     private Integer count=0;
 
@@ -52,12 +52,12 @@ public class Course {
         this.id = id;
     }
 
-    public String getCourseName() {
-        return courseName;
+    public String getName() {
+        return name;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
+    public void setName(String Name) {
+        this.name = name;
     }
 
     public String getMemo() {
@@ -68,11 +68,11 @@ public class Course {
         this.memo = memo;
     }
 
-    public String getTime() {
+    public int getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(int time) {
         this.time = time;
     }
 
