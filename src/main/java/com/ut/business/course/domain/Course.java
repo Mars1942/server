@@ -57,7 +57,7 @@ public class Course {
         return name;
     }
 
-    public void setName(String Name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -105,7 +105,11 @@ public class Course {
 
     @Transient
     public String getTeacherId() {
-        return teacher.getId();
+        if(teacher == null) {
+            return "";
+        } else {
+            return teacher.getId();
+        }
     }
 
     public void setTeacherId(String teacherId) {
@@ -114,7 +118,11 @@ public class Course {
 
     @Transient
     public String getTeacherName() {
-        return teacher.getName();
+        if(teacher == null) {
+            return "";
+        } else {
+            return teacher.getName();
+        }
     }
 
     public void setTeacherName(String teacherName) {
