@@ -1,5 +1,6 @@
 package com.ut.business.common;
 
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class MyControllerAdvice {
 
+
     /**
      * 全局异常捕捉处理
      * @param ex
@@ -24,6 +26,7 @@ public class MyControllerAdvice {
         BackResult<String> br = new BackResult<>(ex.getMessage());
         br.setMsg("服务器发生异常");
         br.setCode(2);
+        ex.printStackTrace();
         return br;
     }
 
