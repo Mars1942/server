@@ -22,6 +22,14 @@ public class RoleController {
         return br;
     }
 
+    @RequestMapping(value = "/listAll", method = RequestMethod.GET)
+    public BackResult findAll() throws Exception {
+        Iterable<Role> page = roleService.findAll();
+        BackResult<Iterable<Role>> br = new BackResult<>(page);
+        return br;
+    }
+
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public BackResult findById(@PathVariable String id) throws Exception{
         Role role = roleService.findById(id);

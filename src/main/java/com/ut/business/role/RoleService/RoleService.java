@@ -31,6 +31,11 @@ public class RoleService {
         return RoleRepository.findAll(request);
     }
 
+    public Iterable<Role> findAll() throws Exception{
+        Sort sort = new Sort("name");
+        return RoleRepository.findAll(sort);
+    }
+
     public Role findById(String id) throws Exception{
         return RoleRepository.findOne(id);
     }
