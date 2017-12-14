@@ -1,10 +1,12 @@
 package com.ut.business.user.domain;
 
 import com.ut.business.course.domain.UserToCourse;
+import com.ut.business.role.domain.Role;
 import com.ut.business.role.domain.UserToRole;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +30,8 @@ public class User{
     private List<UserToRole> uToRList;
 
     private List<UserToCourse> uTocList;
+
+    private List<String> roleIds;
 
     public User() {
     }
@@ -86,7 +90,7 @@ public class User{
         this.passWord = passWord;
     }
 
-    @OneToMany(mappedBy="user"/*,cascade = CascadeType.ALL, fetch = FetchType.LAZY*/)
+    @OneToMany(mappedBy="user",cascade = CascadeType.REMOVE/*, fetch = FetchType.LAZY*/)
     public List<UserToRole> getuToRList() {
         return uToRList;
     }
@@ -95,7 +99,7 @@ public class User{
         this.uToRList = uToRList;
     }
 
-    @OneToMany(mappedBy="user")
+    @OneToMany(mappedBy="user",cascade = CascadeType.REMOVE)
     public List<UserToCourse> getuTocList() {
         return uTocList;
     }
@@ -103,4 +107,14 @@ public class User{
     public void setuTocList(List<UserToCourse> uTocList) {
         this.uTocList = uTocList;
     }
+
+    @Transient
+    public List<String> getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(List<String> roleIds) {
+        this.roleIds = roleIds;
+    }
+
 }

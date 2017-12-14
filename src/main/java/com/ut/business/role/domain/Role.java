@@ -23,6 +23,8 @@ public class Role {
 
     private List<RoleToApplication> rToAList;
 
+    private List<String> applicationIds;
+
     @Id
     @GeneratedValue(generator = "uuid",strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "uuid", strategy = "uuid")
@@ -51,7 +53,7 @@ public class Role {
         this.sort = sort;
     }
 
-    @OneToMany(mappedBy="role",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="role",cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonIgnore
     public List<UserToRole> getuToRList() {
         return uToRList;
@@ -61,12 +63,21 @@ public class Role {
         this.uToRList = uToRList;
     }
 
-    @OneToMany(mappedBy="role",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="role",cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     public List<RoleToApplication> getrToAList() {
         return rToAList;
     }
 
     public void setrToAList(List<RoleToApplication> rToAList) {
         this.rToAList = rToAList;
+    }
+
+    @Transient
+    public List<String> getApplicationIds() {
+        return applicationIds;
+    }
+
+    public void setApplicationIds(List<String> applicationIds) {
+        this.applicationIds = applicationIds;
     }
 }

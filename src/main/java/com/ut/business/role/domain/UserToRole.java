@@ -33,7 +33,7 @@ public class UserToRole {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id")
     public User getUser() {
         return user;
     }
@@ -51,4 +51,6 @@ public class UserToRole {
     public void setRole(Role role) {
         this.role = role;
     }
+
+
 }

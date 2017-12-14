@@ -1,5 +1,8 @@
 package com.ut.business.role.RoleService;
 
+import com.ut.business.application.domain.Application;
+import com.ut.business.application.domain.RoleToApplication;
+import com.ut.business.application.repository.RoleToApplicationRepository;
 import com.ut.business.role.domain.Role;
 import com.ut.business.role.domain.UserToRole;
 import com.ut.business.role.repository.RoleRepository;
@@ -22,8 +25,45 @@ public class RoleService {
     @Autowired
     private UserToRoleRepository userToRoleRepository;
 
+    @Autowired
+    private RoleToApplicationRepository roleToApplicationRepository;
+
     @Transactional
-    public String save(Role role) throws Exception{ return RoleRepository.save(role).getId();}
+    public String save(Role role, List<String> applicationIds) throws Exception{
+        String id = RoleRepository.save(role).getId();
+        if (applicationIds != null) {
+            for (String appId:applicationIds) {
+                RoleToApplication roleToApplication = new RoleToApplication();
+                Application application = new Application();
+                application.setId(appId);
+                roleToApplication.setApplication(application);
+                role.setId(id);
+                roleToApplication.setRole(role);
+                roleToApplicationRepository.save(roleToApplication);
+            }
+        }
+        return id;
+    }
+
+    @Transactional
+    public String update(Role role, List<String> applicationIds) {
+        RoleRepository.save(role);
+        List<RoleToApplication> rToAList = roleToApplicationRepository.findByRoleId(role.getId());
+        for (RoleToApplication roleToApplication:rToAList) {
+            roleToApplicationRepository.delete(roleToApplication);
+        }
+        if (applicationIds != null) {
+            for (String appId:applicationIds) {
+                RoleToApplication roleToApplication = new RoleToApplication();
+                Application application = new Application();
+                application.setId(appId);
+                roleToApplication.setApplication(application);
+                roleToApplication.setRole(role);
+                roleToApplicationRepository.save(roleToApplication);
+            }
+        }
+        return role.getId();
+    }
 
     public Page<Role> findAll(int pageNumber, int pageSize) throws Exception{
         Sort sort = new Sort("name");
@@ -45,12 +85,14 @@ public class RoleService {
         return userToRoleRepository.save(userToRole).getId();
     }
 
+
     @Transactional
     public void del(String id) throws Exception {
         RoleRepository.delete(id);
-        List<UserToRole> list = userToRoleRepository.findByRoleId(id);
+        /*List<UserToRole> list = userToRoleRepository.findByRoleId(id);
         for (UserToRole userToRole : list) {
             userToRoleRepository.delete(userToRole);
-        }
+        }*/
     }
+
 }

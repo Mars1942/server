@@ -2,11 +2,16 @@ package com.ut.business.user.controller;
 
 import com.ut.business.common.BackResult;
 import com.ut.business.pagingandsorting.constant.Constant;
+import com.ut.business.role.domain.UserToRole;
 import com.ut.business.user.domain.User;
 import com.ut.business.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "user")
@@ -19,6 +24,13 @@ public class UserController {
     public BackResult firstPage(@RequestParam("pageNumber") int pageNumber) throws Exception {
         Page<User> page = userService.findAll(pageNumber, Constant.PAGE_SIZE);
         BackResult<Page<User>> br = new BackResult<>(page);
+        return br;
+    }
+
+    @RequestMapping(value = "/listAll", method = RequestMethod.GET)
+    public BackResult firstList() throws Exception {
+        List<User> list = userService.ListAll();
+        BackResult<List<User>> br = new BackResult<>(list);
         return br;
     }
 
@@ -55,7 +67,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
     public BackResult add(@RequestBody User user) throws Exception{
-        BackResult<String> br = new BackResult<>(userService.save(user));
+        BackResult<String> br = new BackResult<>(userService.save(user,user.getRoleIds()));
         br.setMsg("添加成功");
         return br;
     }
@@ -64,7 +76,7 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public BackResult update(@PathVariable String id,@RequestBody User user) throws Exception{
         user.setId(id);
-        BackResult<String> br = new BackResult<>(userService.save(user));
+        BackResult<String> br = new BackResult<>(userService.update(user,user.getRoleIds()));
         br.setMsg("修改成功");
         return br;
     }

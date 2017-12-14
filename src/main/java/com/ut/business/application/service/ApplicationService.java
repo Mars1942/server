@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class ApplicationService {
@@ -34,5 +35,9 @@ public class ApplicationService {
         Sort sort = new Sort("sort");
         PageRequest request = new PageRequest(pageNumber, pageSize, sort);
         return applicationRepository.findAll(request);
+    }
+
+    public List<Application> listAll() {
+        return (List<Application>) applicationRepository.findAll();
     }
 }

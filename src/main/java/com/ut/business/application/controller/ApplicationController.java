@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "application")
 public class ApplicationController {
@@ -21,6 +23,13 @@ public class ApplicationController {
     public BackResult firstPage(@RequestParam("pageNumber") int pageNumber) throws Exception {
         Page<Application> page = applicationService.findAll(pageNumber, Constant.PAGE_SIZE);
         BackResult<Page<Application>> br = new BackResult<>(page);
+        return br;
+    }
+
+    @RequestMapping(value = "/listAll", method = RequestMethod.GET)
+    public BackResult ListAll()throws Exception {
+        List<Application> list = applicationService.listAll();
+        BackResult<List<Application>> br = new BackResult<>(list);
         return br;
     }
 

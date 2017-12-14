@@ -29,7 +29,7 @@ public class RoleToApplication {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id", insertable = false, updatable = false)
+    @JoinColumn(name = "role_id")
     public Role getRole() {
         return role;
     }
@@ -39,7 +39,7 @@ public class RoleToApplication {
     }
 
     @ManyToOne(cascade= CascadeType.REFRESH,optional=false)
-    @JoinColumn(name = "application_id", insertable = false, updatable = false)
+    @JoinColumn(name = "application_id")
     public Application getApplication() {
         return application;
     }

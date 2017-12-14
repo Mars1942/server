@@ -8,4 +8,6 @@ import java.util.List;
 public interface UserToRoleRepository extends PagingAndSortingRepository<UserToRole, String> {
 
     public List<UserToRole> findByRoleId(String id);
+
+    public List<UserToRole> findByUserId(String userId);
 }

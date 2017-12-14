@@ -49,7 +49,7 @@ public class RoleController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
     public BackResult add(@RequestBody Role role) throws Exception{
-        BackResult<String> br = new BackResult<>(roleService.save(role));
+        BackResult<String> br = new BackResult<>(roleService.save(role, role.getApplicationIds()));
         br.setMsg("添加成功");
         return br;
     }
@@ -58,7 +58,7 @@ public class RoleController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public BackResult update(@PathVariable String id, @RequestBody Role role) throws Exception{
         role.setId(id);
-        BackResult<String> br = new BackResult<>(roleService.save(role));
+        BackResult<String> br = new BackResult<>(roleService.update(role, role.getApplicationIds()));
         br.setMsg("修改成功");
         return br;
     }
