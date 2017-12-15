@@ -27,6 +27,8 @@ public class User{
 
     private Integer sex;    // 0：男；1：女
 
+    private Integer type = 0;      //用户类型 0：管理员 1：老师 2：学生
+
     private List<UserToRole> uToRList;
 
     private List<UserToCourse> uTocList;
@@ -73,6 +75,14 @@ public class User{
     public Integer getSex() { return sex; }
 
     public void setSex(Integer sex) { this.sex = sex; }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
     public String getLoginName() {
         return loginName;

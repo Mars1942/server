@@ -4,6 +4,7 @@ import com.ut.business.course.domain.Course;
 import com.ut.business.course.domain.UserToCourse;
 import com.ut.business.course.repository.CourseRepository;
 import com.ut.business.course.repository.UserToCourseRepository;
+import com.ut.business.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,15 +25,53 @@ public class CourseService {
 
 
     @Transactional
-    public String save(Course course) throws Exception{ return courseRepository.save(course).getId();}
+    public String save(Course course, List<String> userIds) throws Exception{
+        String id = courseRepository.save(course).getId();
+        if (userIds != null) {
+            for (String userId: userIds) {
+                UserToCourse userToCourse = new UserToCourse();
+                course.setId(id);
+                userToCourse.setCourse(course);
+                User user = new User();
+                user.setId(userId);
+                userToCourse.setUser(user);
+                userToCourseRepository.save(userToCourse);
+            }
+        }
+
+        return id;
+    }
+
+    @Transactional
+    public String update(Course course, List<String> userIds) {
+        String id = courseRepository.save(course).getId();
+        List<UserToCourse> list = userToCourseRepository.findByCourseId(id);
+        if (!list.isEmpty()){
+            for (UserToCourse userToCourse:list) {
+                userToCourseRepository.delete(userToCourse);
+            }
+        }
+        if (userIds != null) {
+            for (String userId:userIds) {
+                UserToCourse userToCourse = new UserToCourse();
+                course.setId(id);
+                userToCourse.setCourse(course);
+                User user = new User();
+                user.setId(userId);
+                userToCourse.setUser(user);
+                userToCourseRepository.save(userToCourse);
+            }
+        }
+        return id;
+    }
 
     @Transactional
     public void del(String id) throws Exception {
         courseRepository.delete(id);
-        List<UserToCourse> list = userToCourseRepository.findByCourseId(id);
-        for (UserToCourse userToCourse : list) {
-            userToCourseRepository.delete(userToCourse);
-        }
+//        List<UserToCourse> list = userToCourseRepository.findByCourseId(id);
+//        for (UserToCourse userToCourse : list) {
+//            userToCourseRepository.delete(userToCourse);
+//        }
     }
 
     public Course findById(String id) {

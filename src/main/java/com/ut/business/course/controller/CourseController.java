@@ -41,7 +41,7 @@ public class CourseController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
     public BackResult add(@RequestBody Course course) throws Exception{
-        BackResult<String> br = new BackResult<>(courseService.save(course));
+        BackResult<String> br = new BackResult<>(courseService.save(course, course.getUserIds()));
         br.setMsg("添加成功");
         return br;
     }
@@ -50,7 +50,7 @@ public class CourseController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public BackResult update(@PathVariable String id, @RequestBody Course course) throws Exception{
         course.setId(id);
-        BackResult<String> br = new BackResult<>(courseService.save(course));
+        BackResult<String> br = new BackResult<>(courseService.update(course,course.getUserIds()));
         br.setMsg("修改成功");
         return br;
     }

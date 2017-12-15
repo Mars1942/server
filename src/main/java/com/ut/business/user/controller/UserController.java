@@ -34,6 +34,11 @@ public class UserController {
         return br;
     }
 
+    @RequestMapping(value = "/listAll", method = RequestMethod.GET)
+    public BackResult query(User user) throws Exception {
+
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public BackResult findById(@PathVariable String id) throws Exception{
         User user = userService.findById(id);

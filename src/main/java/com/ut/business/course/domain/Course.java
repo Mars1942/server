@@ -39,6 +39,8 @@ public class Course {
 
     private List<UserToCourse> uTocList;
 
+    private List<String> userIds;
+
 //    private List<User> UserList;
 
     @Id
@@ -130,7 +132,7 @@ public class Course {
     }
 
     @JsonIgnore
-    @OneToMany(mappedBy="course")
+    @OneToMany(mappedBy="course",cascade = CascadeType.REMOVE)
     public List<UserToCourse> getuTocList() {
         return uTocList;
     }
@@ -139,6 +141,14 @@ public class Course {
         this.uTocList = uTocList;
     }
 
+    @Transient
+    public List<String> getUserIds() {
+        return userIds;
+    }
+
+    public void setUserIds(List<String> userIds) {
+        this.userIds = userIds;
+    }
 //    @Transient
 //    public List<User> getUserList() {
 //        List<User> list = new ArrayList<User>();
