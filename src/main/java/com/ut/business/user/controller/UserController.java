@@ -36,7 +36,8 @@ public class UserController {
 
     @RequestMapping(value = "/listAll", method = RequestMethod.GET)
     public BackResult query(User user) throws Exception {
-
+        BackResult<String> br = new BackResult<>("");
+        return br;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
