@@ -15,6 +15,8 @@ public class Role {
 
     private String id;
 
+    private String code;
+
     private String name;
 
     private String sort;
@@ -35,6 +37,14 @@ public class Role {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {

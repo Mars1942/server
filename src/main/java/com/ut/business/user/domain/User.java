@@ -1,5 +1,6 @@
 package com.ut.business.user.domain;
 
+import com.ut.business.common.BaseEntity;
 import com.ut.business.course.domain.UserToCourse;
 import com.ut.business.role.domain.Role;
 import com.ut.business.role.domain.UserToRole;
@@ -13,7 +14,7 @@ import java.util.List;
  * 雇员:  先开发实体类===>自动生成数据表
  */
 @Entity
-public class User{
+public class User extends BaseEntity{
 
     private String id;
 
@@ -27,7 +28,7 @@ public class User{
 
     private Integer sex;    // 0：男；1：女
 
-    private Integer type = 0;      //用户类型 0：管理员 1：老师 2：学生
+    private Integer type = 0;      //用户类型 0：普通用户 1：admin管理员
 
     private List<UserToRole> uToRList;
 
