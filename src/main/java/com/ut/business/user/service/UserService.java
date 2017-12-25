@@ -1,8 +1,10 @@
 package com.ut.business.user.service;
 
+import com.ut.business.course.domain.UserToCourse;
 import com.ut.business.role.domain.Role;
 import com.ut.business.role.domain.UserToRole;
 import com.ut.business.role.repository.UserToRoleRepository;
+import com.ut.business.user.controller.UserVo;
 import com.ut.business.user.domain.User;
 import com.ut.business.user.repository.UserPagingAndSortingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,15 +89,19 @@ public class UserService {
         return userPagingAndSortingRepository.findAll(request);
     }
 
-    public Page<User> search(final User user, final String code, final int pageNumber, final int pageSize) throws Exception{
+    public Page<User> search(final UserVo userVo, final int pageNumber, final int pageSize) throws Exception{
         Specification<User> spec = new Specification<User>() {
             @Override
             public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 Predicate predicate = cb.conjunction();
                 // 设置sql链接
                 Join<User, UserToRole> join = root.join("uToRList", JoinType.INNER);
-                if (code != null && code.equals("")) {
-                    predicate.getExpressions().add(cb.equal(join.get("role").get("code"), code));
+                if (userVo.getCourseId() != null && !userVo.getCourseId().equals("")) {
+                    Join<User,UserToCourse> rJoin = root.join("uTocList", JoinType.INNER);
+                    predicate.getExpressions().add(cb.equal(rJoin.get("course").get("id"), userVo.getCourseId()));
+                }
+                if (userVo.getRoleCode() != null && !userVo.getRoleCode().equals("")) {
+                    predicate.getExpressions().add(cb.equal(join.get("role").get("code"), userVo.getRoleCode()));
                 }
                 return predicate;
             }
@@ -104,17 +110,25 @@ public class UserService {
         return userPagingAndSortingRepository.findAll(spec,pageable);
     }
 
-    public List<User> search(final User user, final String code) throws Exception{
+    public List<User> search(final UserVo userVo) throws Exception{
         Specification<User> spec = new Specification<User>() {
             @Override
             public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 Predicate predicate = cb.conjunction();
                 // 设置sql链接
                 Join<User, UserToRole> join = root.join("uToRList", JoinType.INNER);
-//                Join<UserToRole,Role> rJoin = join.join("role");
-                predicate.getExpressions().add(cb.equal(join.get("role").get("code"), code));
-                if (user.getLoginName() != null && user.getLoginName().equals("")) {
-                    predicate.getExpressions().add(cb.equal(root.get("loginName"), user.getLoginName()));
+                if (userVo.getCourseId() != null && !userVo.getCourseId().equals("")) {
+                    Join<User,UserToCourse> rJoin = root.join("uTocList", JoinType.INNER);
+                    predicate.getExpressions().add(cb.equal(rJoin.get("course").get("id"), userVo.getCourseId()));
+                }
+                if (userVo.getRoleCode() != null && !userVo.getRoleCode().equals("")) {
+                    predicate.getExpressions().add(cb.equal(join.get("role").get("code"), userVo.getRoleCode()));
+                }
+                if (userVo.getIds() != null && !userVo.getIds().isEmpty()) {
+                    predicate.getExpressions().add(cb.notEqual(root.get("id"), userVo.getIds()));
+                }
+                if (userVo.getLoginName() != null && !userVo.getLoginName().equals("")) {
+                    predicate.getExpressions().add(cb.equal(root.get("loginName"), userVo.getLoginName()));
                 }
                 // 或
 //                Predicate p1 = cb.equal(rJoin.get("code").as(String.class), code);
@@ -134,4 +148,7 @@ public class UserService {
         return userPagingAndSortingRepository.findByLoginNameAndPassWord(name, passWord);
     }
 
+    public List<User> findByIdNotIn(List<String> ids) {
+        return userPagingAndSortingRepository.findByIdNotIn(ids);
+    }
 }

@@ -4,6 +4,7 @@ import com.ut.business.common.BackResult;
 import com.ut.business.course.domain.Course;
 import com.ut.business.course.service.CourseService;
 import com.ut.business.pagingandsorting.constant.Constant;
+import com.ut.business.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,10 @@ public class CourseController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
     public BackResult add(@RequestBody Course course) throws Exception{
+        User teacher = new User();
+        System.out.println(course.getTeacherId());
+        teacher.setId(course.getTeacherId());
+        course.setTeacher(teacher);
         BackResult<String> br = new BackResult<>(courseService.save(course, course.getUserIds()));
         br.setMsg("添加成功");
         return br;

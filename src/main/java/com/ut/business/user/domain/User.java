@@ -1,6 +1,7 @@
 package com.ut.business.user.domain;
 
 import com.ut.business.common.BaseEntity;
+import com.ut.business.course.domain.Course;
 import com.ut.business.course.domain.UserToCourse;
 import com.ut.business.role.domain.Role;
 import com.ut.business.role.domain.UserToRole;

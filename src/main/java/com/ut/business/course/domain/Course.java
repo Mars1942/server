@@ -97,6 +97,7 @@ public class Course {
 
     @JsonIgnore
     @OneToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "teacher_id",unique = true)
     public User getTeacher() {
         return teacher;
     }
@@ -108,7 +109,7 @@ public class Course {
     @Transient
     public String getTeacherId() {
         if(teacher == null) {
-            return "";
+            return teacherId;
         } else {
             return teacher.getId();
         }

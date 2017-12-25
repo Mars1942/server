@@ -51,6 +51,6 @@ public class UserServiceTest{
     public void testToCourse() throws Exception {
         Course course = new Course();
         course.setCount(3);
-        courseService.save(course);
+//        courseService.save(course);
     }
 }

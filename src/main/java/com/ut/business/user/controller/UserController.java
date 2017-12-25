@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,10 +33,42 @@ public class UserController {
         return br;
     }
 
+    /**
+     * 按条件查询page
+     * @param userVo
+     *      角色编码
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/listByParam", method = RequestMethod.GET)
-    public BackResult query(User user,String code) throws Exception {
+    public BackResult query(UserVo userVo,@RequestParam("pageNumber") int pageNumber) throws Exception {
+//        PageParam
+        BackResult<Page<User>> br = null;
+        br = new BackResult<>(userService.search(userVo,1, Constant.PAGE_SIZE));
+        return br;
+    }
+
+    /**
+     * 按条件查询学生list
+     * @param userVo
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/listByCourse", method = RequestMethod.GET)
+    public BackResult queryList(UserVo userVo) throws Exception {
         BackResult<List<User>> br = null;
-        br = new BackResult<>(userService.search(user,code));
+        if (userVo.getIsSel() == 0) {
+            List<User> list = userService.search(userVo);
+            List<String> ids = new ArrayList<>();
+            for (User user : list) {
+                ids.add(user.getId());
+            }
+            userVo.setIds(ids);
+            userVo.setCourseId("");
+            br = new BackResult<>(userService.search(userVo));
+        } else {
+            br = new BackResult<>(userService.search(userVo));
+        }
         return br;
     }
 
