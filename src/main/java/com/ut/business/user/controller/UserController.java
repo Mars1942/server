@@ -44,7 +44,7 @@ public class UserController {
     public BackResult query(UserVo userVo,@RequestParam("pageNumber") int pageNumber) throws Exception {
 //        PageParam
         BackResult<Page<User>> br = null;
-        br = new BackResult<>(userService.search(userVo,1, Constant.PAGE_SIZE));
+        br = new BackResult<>(userService.search(userVo,pageNumber, Constant.PAGE_SIZE));
         return br;
     }
 

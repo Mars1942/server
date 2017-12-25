@@ -33,6 +33,7 @@ public class UserService {
     public String save(User user,List<String> roleIds) throws Exception {
         Date now = new Date();
         user.setCreateTime(now);
+        user.setUpdateTime(now);
         String id = userPagingAndSortingRepository.save(user).getId();
         if (roleIds != null) {
             for (String roleId: roleIds) {
@@ -95,13 +96,16 @@ public class UserService {
             public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 Predicate predicate = cb.conjunction();
                 // 设置sql链接
-                Join<User, UserToRole> join = root.join("uToRList", JoinType.INNER);
+                Join<User, UserToRole> join = root.join("uToRList", JoinType.LEFT);
                 if (userVo.getCourseId() != null && !userVo.getCourseId().equals("")) {
-                    Join<User,UserToCourse> rJoin = root.join("uTocList", JoinType.INNER);
+                    Join<User,UserToCourse> rJoin = root.join("uTocList", JoinType.LEFT);
                     predicate.getExpressions().add(cb.equal(rJoin.get("course").get("id"), userVo.getCourseId()));
                 }
                 if (userVo.getRoleCode() != null && !userVo.getRoleCode().equals("")) {
                     predicate.getExpressions().add(cb.equal(join.get("role").get("code"), userVo.getRoleCode()));
+                }
+                if (userVo.getName() != null && !userVo.getName().equals("")) {
+                    predicate.getExpressions().add(cb.like(root.<String>get("name"), userVo.getName() + "%"));
                 }
                 return predicate;
             }
@@ -116,9 +120,9 @@ public class UserService {
             public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 Predicate predicate = cb.conjunction();
                 // 设置sql链接
-                Join<User, UserToRole> join = root.join("uToRList", JoinType.INNER);
+                Join<User, UserToRole> join = root.join("uToRList", JoinType.LEFT);
                 if (userVo.getCourseId() != null && !userVo.getCourseId().equals("")) {
-                    Join<User,UserToCourse> rJoin = root.join("uTocList", JoinType.INNER);
+                    Join<User,UserToCourse> rJoin = root.join("uTocList", JoinType.LEFT);
                     predicate.getExpressions().add(cb.equal(rJoin.get("course").get("id"), userVo.getCourseId()));
                 }
                 if (userVo.getRoleCode() != null && !userVo.getRoleCode().equals("")) {
@@ -127,8 +131,8 @@ public class UserService {
                 if (userVo.getIds() != null && !userVo.getIds().isEmpty()) {
                     predicate.getExpressions().add(cb.notEqual(root.get("id"), userVo.getIds()));
                 }
-                if (userVo.getLoginName() != null && !userVo.getLoginName().equals("")) {
-                    predicate.getExpressions().add(cb.equal(root.get("loginName"), userVo.getLoginName()));
+                if (userVo.getName() != null && !userVo.getName().equals("")) {
+                    predicate.getExpressions().add(cb.like(root.<String>get("name"), userVo.getName() + "%"));
                 }
                 // 或
 //                Predicate p1 = cb.equal(rJoin.get("code").as(String.class), code);
