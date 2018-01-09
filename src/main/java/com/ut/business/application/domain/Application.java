@@ -23,6 +23,8 @@ public class Application {
 
     private String url;
 
+    private String icon;
+
     private int sort;
 
 //    private List<Application> child;
@@ -73,6 +75,14 @@ public class Application {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
 //    @OneToMany(mappedBy="application",cascade = CascadeType.ALL, fetch = FetchType.LAZY)

@@ -2,6 +2,7 @@ package com.ut.business.user.controller;
 
 import com.ut.business.common.BackResult;
 import com.ut.business.pagingandsorting.constant.Constant;
+import com.ut.business.role.domain.UserToRole;
 import com.ut.business.user.domain.User;
 import com.ut.business.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +41,23 @@ public class UserController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/listByParam", method = RequestMethod.GET)
+    @RequestMapping(value = "/pageByParam", method = RequestMethod.GET)
     public BackResult query(UserVo userVo,@RequestParam("pageNumber") int pageNumber) throws Exception {
 //        PageParam
         BackResult<Page<User>> br = null;
-        br = new BackResult<>(userService.search(userVo,1, Constant.PAGE_SIZE));
+        if (userVo.getIsSel() != null && userVo.getIsSel() == 0) {
+            List<User> list = userService.search(userVo);
+            List<String> ids = new ArrayList<>();
+            for (User user : list) {
+                ids.add(user.getId());
+            }
+            userVo.setIds(ids);
+            userVo.setCourseId("");
+            userVo.setUserList(list);
+            br = new BackResult<>(userService.search(userVo,pageNumber, Constant.PAGE_SIZE));
+        } else {
+            br = new BackResult<>(userService.search(userVo,pageNumber, Constant.PAGE_SIZE));
+        }
         return br;
     }
 
@@ -54,10 +67,10 @@ public class UserController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/listByCourse", method = RequestMethod.GET)
+    @RequestMapping(value = "/listByParam", method = RequestMethod.GET)
     public BackResult queryList(UserVo userVo) throws Exception {
         BackResult<List<User>> br = null;
-        if (userVo.getIsSel() == 0) {
+        if (userVo.getIsSel() != null && userVo.getIsSel() == 0) {
             List<User> list = userService.search(userVo);
             List<String> ids = new ArrayList<>();
             for (User user : list) {
@@ -65,6 +78,7 @@ public class UserController {
             }
             userVo.setIds(ids);
             userVo.setCourseId("");
+            userVo.setUserList(list);
             br = new BackResult<>(userService.search(userVo));
         } else {
             br = new BackResult<>(userService.search(userVo));
@@ -89,10 +103,35 @@ public class UserController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/nameCheck", method = RequestMethod.POST)
+    public BackResult loginNameCheck(String loginName) {
+        User us = userService.findByLoginName(loginName);
+        BackResult<User> br = new BackResult<>(us);
+        if (us == null) {
+            br.setMsg("该用户名没有被使用");
+        } else {
+            br.setCode(4);
+            br.setMsg("该用户名已被使用");
+        }
+        return br;
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public BackResult login(@RequestBody User user) throws Exception{
         User us = userService.findByLoginNameAndPassWord(user.getLoginName(),user.getPassWord());
-        BackResult<User> br = new BackResult<>(us);
+        UserVo userVo = null;
+        if (us != null) {
+            userVo = new UserVo(us);
+        }
+        if (us.getuToRList() != null) {
+            for (UserToRole utor:us.getuToRList()) {
+                if (utor.getRole().getCode()!= null && utor.getRole().getCode().equals("001")) {
+                    userVo.setIsTeacher(1);
+                }
+            }
+        }
+        BackResult<UserVo> br = new BackResult<>(userVo);
         if (us == null) {
             br.setCode(3);
             br.setMsg("没有该用户或密码不正确");

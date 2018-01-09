@@ -31,8 +31,6 @@ public class Course {
 
     private Integer hasCount=0;//已选课人数
 
-    private User teacher;
-
     private String teacherId;
 
     private String teacherName;
@@ -40,6 +38,8 @@ public class Course {
     private List<UserToCourse> uTocList;
 
     private List<String> userIds;
+
+    private String userId;
 
 //    private List<User> UserList;
 
@@ -95,42 +95,23 @@ public class Course {
         this.hasCount = hasCount;
     }
 
-    @JsonIgnore
-    @OneToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "teacher_id",unique = true)
-    public User getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(User teacher) {
-        this.teacher = teacher;
-    }
-
-    @Transient
     public String getTeacherId() {
-        if(teacher == null) {
-            return teacherId;
-        } else {
-            return teacher.getId();
-        }
+        return teacherId;
     }
 
     public void setTeacherId(String teacherId) {
         this.teacherId = teacherId;
     }
 
-    @Transient
     public String getTeacherName() {
-        if(teacher == null) {
-            return "";
-        } else {
-            return teacher.getName();
-        }
+        return teacherName;
     }
 
     public void setTeacherName(String teacherName) {
         this.teacherName = teacherName;
     }
+
+    //@Transient 注释掉不想关联数据库的属性
 
     @JsonIgnore
     @OneToMany(mappedBy="course",cascade = CascadeType.REMOVE)
@@ -142,7 +123,7 @@ public class Course {
         this.uTocList = uTocList;
     }
 
-    @Transient
+    @Transient//注释掉不想关联数据库的属性
     public List<String> getUserIds() {
         return userIds;
     }
@@ -150,7 +131,17 @@ public class Course {
     public void setUserIds(List<String> userIds) {
         this.userIds = userIds;
     }
-//    @Transient
+
+    @Transient
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    //    @Transient
 //    public List<User> getUserList() {
 //        List<User> list = new ArrayList<User>();
 //        for (UserToCourse userToCourse:uTocList) {

@@ -12,4 +12,6 @@ public interface UserPagingAndSortingRepository extends PagingAndSortingReposito
     User findByLoginNameAndPassWord(String loginName, String passWord);
 
     List<User> findByIdNotIn(List<String> ids);
+
+    User findByLoginName(String loginName);
 }

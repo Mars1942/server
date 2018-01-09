@@ -16,8 +16,8 @@ public class RoleController {
     private RoleService roleService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public BackResult findPage(@RequestParam("pageNumber") int pageNumber) throws Exception {
-        Page<Role> page = roleService.findAll(pageNumber, Constant.PAGE_SIZE);
+    public BackResult findPage(Role role, @RequestParam("pageNumber") int pageNumber) throws Exception {
+        Page<Role> page = roleService.search(role,pageNumber, Constant.PAGE_SIZE);
         BackResult<Page<Role>> br = new BackResult<>(page);
         return br;
     }

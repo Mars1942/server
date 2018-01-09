@@ -23,7 +23,16 @@ public class MyControllerAdvice {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public BackResult errorHandler(Exception ex) {
-        BackResult<String> br = new BackResult<>(ex.getMessage());
+        String msg ="";
+        System.out.println(ex.getLocalizedMessage());
+        if (ex.getLocalizedMessage() != null && ex.getLocalizedMessage().indexOf("result returns more than one elements") != -1) {
+            msg = "查询返回实体为多个";
+        } else if (ex.getLocalizedMessage() != null && ex.getLocalizedMessage().indexOf("could not execute statement") != -1) {
+            msg = "实体于数内容不匹配或关联不匹配";
+        } else if (ex.getMessage() == null) {
+            msg = "查询返回内容为空";
+        }
+        BackResult<String> br = new BackResult<>(ex.getMessage() + "::::" + msg);
         br.setMsg("服务器发生异常");
         br.setCode(2);
         ex.printStackTrace();

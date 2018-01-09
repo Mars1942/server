@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
  */
 public class BackResult<T> {
 
-    //返回代码（1：成功，2后台异常，3：密码或账号错误）
+    //返回代码（1：成功，2后台异常，3：密码或账号错误，4：用户名已存在,5:已经选择了该课程,6:已经选择了该课程）
     private int code = 1;
 
     //返回消息(默认成功)

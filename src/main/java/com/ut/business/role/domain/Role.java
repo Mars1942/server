@@ -19,7 +19,7 @@ public class Role {
 
     private String name;
 
-    private String sort;
+    private int sort=10;
 
     private List<UserToRole> uToRList;
 
@@ -55,11 +55,11 @@ public class Role {
         this.name = name;
     }
 
-    public String getSort() {
+    public int getSort() {
         return sort;
     }
 
-    public void setSort(String sort) {
+    public void setSort(int sort) {
         this.sort = sort;
     }
 
