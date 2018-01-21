@@ -97,12 +97,16 @@ public class UserService {
             public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 Predicate predicate = cb.conjunction();
                 // 设置sql链接
+<<<<<<< HEAD
                 if (userVo.getRoleCode() != null && !userVo.getRoleCode().equals("")) {
                     Join<User, UserToRole> join = root.join("uToRList", JoinType.INNER);
                     predicate.getExpressions().add(cb.equal(join.get("role").get("code"), userVo.getRoleCode()));
                 }
+=======
+                Join<User, UserToRole> join = root.join("uToRList", JoinType.LEFT);
+>>>>>>> 2643accc5158ab898c99d0252d86381f53f2f76a
                 if (userVo.getCourseId() != null && !userVo.getCourseId().equals("")) {
-                    Join<User,UserToCourse> rJoin = root.join("uTocList", JoinType.INNER);
+                    Join<User,UserToCourse> rJoin = root.join("uTocList", JoinType.LEFT);
                     predicate.getExpressions().add(cb.equal(rJoin.get("course").get("id"), userVo.getCourseId()));
                 }
                 if (userVo.getIds() != null && !userVo.getIds().isEmpty()) {
@@ -115,7 +119,13 @@ public class UserService {
                 if (userVo.getName() != null && !userVo.getName().equals("")) {
                     predicate.getExpressions().add(cb.like(root.<String>get("name"), userVo.getName() + "%"));
                 }
+<<<<<<< HEAD
                 predicate.getExpressions().add(cb.equal(root.get("type"), userVo.getType()));
+=======
+                if (userVo.getName() != null && !userVo.getName().equals("")) {
+                    predicate.getExpressions().add(cb.like(root.<String>get("name"), userVo.getName() + "%"));
+                }
+>>>>>>> 2643accc5158ab898c99d0252d86381f53f2f76a
                 return predicate;
             }
         };
@@ -129,12 +139,16 @@ public class UserService {
             public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 Predicate predicate = cb.conjunction();
                 // 设置sql链接
+<<<<<<< HEAD
                 if (userVo.getRoleCode() != null && !userVo.getRoleCode().equals("")) {
                     Join<User, UserToRole> join = root.join("uToRList", JoinType.INNER);
                     predicate.getExpressions().add(cb.equal(join.get("role").get("code"), userVo.getRoleCode()));
                 }
+=======
+                Join<User, UserToRole> join = root.join("uToRList", JoinType.LEFT);
+>>>>>>> 2643accc5158ab898c99d0252d86381f53f2f76a
                 if (userVo.getCourseId() != null && !userVo.getCourseId().equals("")) {
-                    Join<User,UserToCourse> rJoin = root.join("uTocList", JoinType.INNER);
+                    Join<User,UserToCourse> rJoin = root.join("uTocList", JoinType.LEFT);
                     predicate.getExpressions().add(cb.equal(rJoin.get("course").get("id"), userVo.getCourseId()));
                 }
                 if (userVo.getIds() != null && !userVo.getIds().isEmpty()) {
