@@ -134,7 +134,7 @@ public class CourseService {
                         query.where(cb.and(p1));
                     }
                 }
-                if (!courseVo.getIds().isEmpty()) {
+                if (courseVo.getIds() != null && !courseVo.getIds().isEmpty()) {
                     CriteriaBuilder.In<String> in = cb.in(root.<String>get("id"));
                     for (String id:courseVo.getIds()) {
                         in.value(id);

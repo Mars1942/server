@@ -123,11 +123,11 @@ public class UserController {
         UserVo userVo = null;
         if (us != null) {
             userVo = new UserVo(us);
-        }
-        if (us.getuToRList() != null) {
-            for (UserToRole utor:us.getuToRList()) {
-                if (utor.getRole().getCode()!= null && utor.getRole().getCode().equals("001")) {
-                    userVo.setIsTeacher(1);
+            if (us.getuToRList() != null) {
+                for (UserToRole utor:us.getuToRList()) {
+                    if (utor.getRole().getCode()!= null && utor.getRole().getCode().equals("001")) {
+                        userVo.setIsTeacher(1);
+                    }
                 }
             }
         }
